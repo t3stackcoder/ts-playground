@@ -1,10 +1,15 @@
-import './style.css'
-import typescriptLogo from './assets/typescript.svg'
-import viteLogo from './assets/vite.svg'
-import heroImg from './assets/hero.png'
-import { setupCounter } from './counter.ts'
+import "./style.css";
+import heroImg from "./assets/hero.png";
+import typescriptLogo from "./assets/typescript.svg";
+import viteLogo from "./assets/vite.svg";
+import { setupCounter } from "./counter.ts";
 
-document.querySelector<HTMLDivElement>('#app')!.innerHTML = `
+const app = document.querySelector<HTMLDivElement>("#app");
+if (!app) {
+	throw new Error("Missing #app element");
+}
+
+app.innerHTML = `
 <section id="center">
   <div class="hero">
     <img src="${heroImg}" class="base" width="170" height="179">
@@ -55,6 +60,11 @@ document.querySelector<HTMLDivElement>('#app')!.innerHTML = `
 
 <div class="ticks"></div>
 <section id="spacer"></section>
-`
+`;
 
-setupCounter(document.querySelector<HTMLButtonElement>('#counter')!)
+const counterButton = document.querySelector<HTMLButtonElement>("#counter");
+if (!counterButton) {
+	throw new Error("Missing #counter element");
+}
+
+setupCounter(counterButton);
