@@ -17,19 +17,11 @@ If none of these are possible (e.g. you lack a way to run something), say so exp
 
 ## Required verification before marking work complete
 
-Run in this order for any change with a runtime surface:
+Husky enforces `typecheck` + `lint` + `test:run` on `pre-commit` and `pre-push` (see `.husky/`). A successful `git commit`/`git push` output is the accepted proof for those three — don't re-run them by hand first just to narrate the same result twice. If the hook fails, that failure output is itself the evidence something isn't done yet.
 
-```
-npm run typecheck   # tsc --noEmit
-npm run lint         # biome check .
-npm run test:run     # vitest run
-```
+Hooks only run at commit/push time and can't see runtime behavior. So for any change with a runtime surface, still run `npm run dev` and exercise the actual change in the browser before claiming it works — golden path plus at least one edge case. A passing hook proves the code compiles, lints, and passes tests; it does not prove the feature works.
 
-For UI/behavioral changes, also run `npm run dev` and exercise the actual change in the browser — golden path plus at least one edge case. Type checking and tests verify code correctness, not feature correctness; don't conflate them.
-
-For docs-only or no-runtime-surface changes, explicitly say so instead of running (or skipping) the above silently.
-
-Husky already enforces `typecheck` + `lint` + `test:run` on `pre-commit` and `pre-push` (see `.husky/`) — treat those as a backstop, not a substitute for verifying before you claim something works.
+For docs-only or no-runtime-surface changes, explicitly say so instead of claiming verification that doesn't apply.
 
 ## Scope discipline
 
